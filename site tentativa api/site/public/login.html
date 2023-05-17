@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Sobre mim - In the sky</title>
+</head>
+
+<body>
+    <!---Cabeçalho-Main-->
+
+    <div class="background">
+        <nav>
+            <h2 class="logo">InThe<span>Sky</span></h2><!--Logo-->
+            <ul class="cabeçalho-link">
+                <li><a href="Index.html">Inicio</a></li>
+                <li><a href="sobremim.html">Sobre mim</a></li>
+                <li><a href="mulheres.html">Mulheres na aviação</a></li>
+                <li><a href="cadastro.html">Cadastre-se</a></li>
+            </ul><!--cabeçalho-link-->
+            <a href="../public/login.html" class="btn">Login</a>
+        </nav>
+
+        <!--Começo-da-seção-sobre-->
+
+                    <div class="geral">
+                        <div id="cadastro" class="cadastro">
+                            <h2 class="titulo" style="color: #008B8B;">Login</h2><br>
+                                <label for="Email">Email</label>
+                                <div class="input">
+                                    <input placeholder=" Insira seu email" id="input_email" name="Email" type="text">
+                                </div>
+                                <br>
+                                <label for="senha">Senha</label>
+                                <div class="input">
+                                    <input placeholder=" Insira sua senha" type="password" id="input_senha" name="senha" type="text">
+                                </div>
+                                <br>
+                                <button class="botao"  onclick="entrar()">Entrar</button><br><br>
+                            </div>
+                            <div class="validacao">
+                                <Div  id="div_validacao"></Div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                
+            </div><!--main-sobre-->
+        </section><!--background-color-Sobre-->
+</body>
+
+</html>
+<script>
+     function entrar() {
+        var emailVar = input_email.value;
+        var senhaVar = input_senha.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            cardErro.style.display = "block"
+            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            finalizarAguardar();
+            return false;
+        }
+        else {
+            setInterval(sumirMensagem, 5000)
+            fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+
+                    setTimeout(function () {
+                        window.location = "poslogin.html";
+                    }, 1000); // apenas para exibir o loading
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+        }
+
+        console.log("FORM LOGIN: ", email);
+        console.log("FORM SENHA: ", senha);
+
+        
+
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+</script>
