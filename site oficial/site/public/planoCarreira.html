@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/planoCarreira.css">
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Plano de Carreira</title>
+</head>
+
+<body>
+    <div class="background">
+        <nav>
+            <h2 class="logo">InThe<span>Sky</span></h2><!--Logo-->
+            <ul class="cabeçalho-link">
+                <li><a href="Index.html">Inicio</a></li>
+                <li><a href="sobremim.html">Sobre mim</a></li>
+                <li><a href="mulheres.html">Mulheres na aviação</a></li>
+                <li><a href="cadastro.html">Cadastre-se</a></li>
+            </ul><!--cabeçalho-link-->
+            <a href="login.html" class="btn">Login</a>
+        </nav>
+
+
+        <div class="container">
+            <div class="conselho">
+                <h1> Plano de Carreira </h1> <br>
+                <h3> Trilhar os seus passos é muito importante para alcançar seus objetivos!<br>
+                    Crie o seu plano de carreira para planejar como chegará aos céus mais rápidamente.</h3><br>
+                <h3> Lembre-se de colocar todos os passos, por mais simples que sejam, quanto mais completo, mais fácil
+                    se torna encontrar o seu lugar no mundo!</h3><br>
+                <h3> Quase me esqueci! O mais importante é nunca comparar a sua trajetória com a dos outros, pois cada
+                    um é dono de sua própria rota, e assim, serão os comandantes responsáveis por todos os desvios, e
+                    passagens por turbulências.</h3><br><br>
+                    <center>
+                <div class="plano">
+                    <p class="inp">Digite um novo passo:</p> <input type="text" id="objetivos_input">
+                    <br><br>
+                    <button onclick="btnCad()">Registrar passo</button>
+                    <br><br>
+                    <button onclick="btnMostrar()">Mostrar plano de Carreira</button>
+                    <div class="divMen" id="divMen"></div>
+                </center>
+                </div>
+            </div>
+</body>
+
+</html>
+
+<script>
+    var passos = [];
+    function btnCad() {
+        var objetivos = objetivos_input.value;
+        passos.push(objetivos);
+        divMen.innerHTML = "";
+
+        if (passos.length >= 0 && passos.length <= 3) {
+            divMen.innerHTML = ` <br> Você têm ${passos.length} passos. Não são muitos, que bom! Continue de olho em sua rota, e não se preocupe caso precise aumentar este número. <br>`;
+        } else if (passos.length >= 8) {
+            divMen.innerHTML = ` <br> Você têm ${passos.length} passos. Você têm muitos passos, mas isto não mede a distância do seu sonho até você! Tenha foco e lembre-se do seu amor por este sonho! <br>`;
+        } else {
+            divMen.innerHTML = ` <br> Você têm ${passos.length} passos. É um número considerável, afinal, todos os sonhos exigem esforços para se tornarem reais. Persista! <br>`;
+        }
+    }
+    function btnMostrar() {
+        for (contador = 1; contador <= passos.length; contador++) {
+            divMen.innerHTML += `
+            <br>
+            ${contador}º passo: ${passos[contador - 1]}<br>
+            `
+        }
+    }
+</script>
